@@ -1,0 +1,14 @@
+.msg-error{
+
+}
+.container-mensagem {
+  width: 100%;
+  min-height: 350px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+.cursor-pointer{
+    cursor:pointer
+}

@@ -1,0 +1,40 @@
+<app-header [titulo]="titulo"></app-header>
+
+<div class="my-3 p-3 bg-white rounded shadow-sm" [ngClass]="{'shadow-sm': isEdit === false}">
+
+  <div class="container-form" [hidden]="status!='blank'">
+    <div class="mb-3">
+      <label for="codigo" class="form-label">Código</label>
+      <input type="text" class="form-control" id="codigo" [(ngModel)]="codigo">
+    </div>
+    <div class="mb-3">
+      <label for="cnpj" class="form-label">CNPJ</label>
+      <input type="text" class="form-control" id="cnpj" [(ngModel)]="cnpj">
+    </div>
+    <div class="mb-3 pb-3">
+      <label for="razaosocial" class="form-label">Razão Social</label>
+      <input type="text" class="form-control" id="razaosocial" [(ngModel)]="razaoSocial">
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-primary" type="button" (click)="ngSalvar()">Salvar</button>
+      <button class="btn btn-info ml-2" type="button" (click)="router.navigate(['/empresa'])" [hidden]='isEdit'>Retornar para a lista</button>
+    </div>
+  </div>
+
+  <div class="container-mensagem" [hidden]="status=='blank'">
+    <div class="mensagem-successo" [hidden]="!statusErrorMensagem">
+      <img src="../../assets/success.png" alt="Sucesso" title="Sucesso" />
+      <p class="pb-8">O registro foi salvo!</p>
+      <p (click)="router.navigate(['/empresa'])" [hidden]="!!isEdit" class="pt-10 text-warning cursor-pointer">Retornar para lista das empresas</p>
+    </div>
+
+    <div class="mensagem-error" [hidden]="!!statusErrorMensagem">
+      <img src="../../assets/error.png" alt="Erro" title="Erro" />
+      <p>Ocorreu um erro ao salvar o registro.</p>
+      <p class="pb-8">{{mensagemErro}}</p>
+      <p (click)="tentarNovamente()" class="pt-10 text-warning cursor-pointer">Preencher novamente</p>
+    </div>
+  </div>
+</div>
+
+

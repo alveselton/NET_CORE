@@ -1,0 +1,79 @@
+<app-header [titulo]="titulo"></app-header>
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+  <h6 class="border-bottom pb-2 mb-0"></h6>
+  <div class="loading" [hidden]="!isLoading">
+    <img src="../../assets/Spin-1s-200px.gif" />
+    <h3>Aguarde um momento...</h3>
+  </div>
+  <table class="table mb-0" [hidden]="isLoading">
+    <thead>
+      <tr>
+        <th class="text-center" scope="col">Operação</th>
+        <th scope="col">Código</th>
+        <th scope="col">Razão Social</th>
+        <th scope="col">CNPJ</th>
+        <th class="text-center" scope="col">Data Cadastro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empresa of listaEmpresas">
+        <th scope="row" class="text-center justify-content-center">
+          <i i-bs name="pencil-square" (click)="triggerModal(modalDataEdicao, empresa)" class='text-info pr-2 cursor-pointer'></i>
+          <i i-bs name="trash" (click)="triggerModal(modalData, empresa)" class="text-danger cursor-pointer"></i>
+        </th>
+        <td>{{empresa.codigo}}</td>
+        <td>{{empresa.razaoSocial}}</td>
+        <td>{{empresa.cnpj}}</td>
+        <td class="text-center">{{empresa.dataCadastro | date:'dd/MM/yyyy'}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5" class="pt-10 ml-0 pl-0">
+          <button class="btn btn-primary" (click)="router.navigate(['/cadastrar'])">
+            <i i-bs name="plus-lg"></i> Incluir
+          </button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Excluir registro</h4>
+  </div>
+  <div class="modal-body">
+    <div class="container-excluir" [hidden]="!!isExibirMensagemExcluir">
+      <p><strong>Deseja excluir o registro da empresa <span class="text-primary">"{{empresaSelecionada?.razaoSocial}}"</span>?</strong></p>
+      <p>* Os dados serão removidos permanentemente.</p>
+      <button type="button" class="btn btn-warning" autofocus (click)="ngDelete()">Excluir o registro</button>
+    </div>
+    <div class="container-excluir-mensagem" [hidden]="!isExibirMensagemExcluir">
+      <img src="../../assets/success.png" alt="Sucesso" title="Sucesso" />
+      <p>O registro foi excluído!</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Fechar</button>
+  </div>
+</ng-template>
+
+<ng-template #modalDataEdicao let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar registro da empresa</h4>
+  </div>
+  <div class="modal-body">
+    <app-cadastrar
+      [titulo]='tituloEdicao'
+      [codigo]='empresaSelecionada.codigo'
+      [cnpj]='empresaSelecionada.cnpj'
+      [razaoSocial]='empresaSelecionada.razaoSocial'
+      [isEdit]=true
+      >
+    </app-cadastrar>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Fechar</button>
+  </div>
+</ng-template>
